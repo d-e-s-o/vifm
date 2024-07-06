@@ -253,6 +253,7 @@ static int munmap_cmd(const cmd_info_t *cmd_info);
 static int nmap_cmd(const cmd_info_t *cmd_info);
 static int nnoremap_cmd(const cmd_info_t *cmd_info);
 static int nohlsearch_cmd(const cmd_info_t *cmd_info);
+static int search_cmd(const cmd_info_t *cmd_info);
 static int noremap_cmd(const cmd_info_t *cmd_info);
 static int map_or_remap(const cmd_info_t *cmd_info, int no_remap);
 static int normal_cmd(const cmd_info_t *cmd_info);
@@ -703,6 +704,10 @@ const cmd_add_t cmds_list[] = {
 	  .descr = "reset highlighting of search matches",
 	  .flags = HAS_COMMENT,
 	  .handler = &nohlsearch_cmd,  .min_args = 0,   .max_args = 0, },
+	{ .name = "search",            .abbr = NULL,    .id = -1,
+	  .descr = "search for matches and highlight them",
+	  .flags = HAS_MACROS_FOR_CMD,
+	  .handler = &search_cmd,  .min_args = 1,   .max_args = 1, },
 	{ .name = "noremap",           .abbr = "no",    .id = COM_NOREMAP,
 	  .descr = "noremap keys in normal and visual modes",
 	  .flags = HAS_EMARK | HAS_RAW_ARGS,
@@ -3916,6 +3921,22 @@ nohlsearch_cmd(const cmd_info_t *cmd_info)
 	ui_view_reset_search_highlight(curr_view);
 	flist_sel_stash_if_nonempty(curr_view);
 	return 0;
+}
+
+/* Search for a file and select it. */
+static int
+search_cmd(const cmd_info_t *cmd_info)
+{
+	int result;
+	if(cmd_info->argc != 1) {
+		ui_sb_err("Search expects a single argument.");
+		return 1;
+	}
+
+	hists_search_save(cmd_info->args);
+	modnorm_set_search_attrs(/*count=*/1, /*last_search_backward=*/0);
+	cmds_preserve_selection();
+	return cmds_dispatch1(cmd_info->args, curr_view, CIT_FSEARCH_PATTERN);
 }
 
 static int
