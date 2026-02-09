@@ -243,6 +243,7 @@ vifm_SOURCES = \
 	modes/dialogs/sort_dialog.c modes/dialogs/sort_dialog.h \
 	\
 	modes/cmdline.c modes/cmdline.h \
+	modes/cmdline_rl.c modes/cmdline_rl.h \
 	modes/file_info.c modes/file_info.h \
 	modes/menu.c modes/menu.h \
 	modes/modes.c modes/modes.h \

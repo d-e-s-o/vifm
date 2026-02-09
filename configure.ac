@@ -706,6 +706,25 @@ if test "$use_libmagic" = "yes"; then
          AC_DEFINE([HAVE_LIBMAGIC], [1], [Define to 1 if you have the `magic' library (-lmagic).])])
 fi
 
+AC_ARG_WITH(readline,
+    AS_HELP_STRING([--without-readline],
+        [disable libreadline for command-line editing @<:@default=yes@:>@]),
+    [use_readline=$withval],
+    [use_readline=yes])
+
+if test "$use_readline" = "yes"; then
+    AC_CHECK_LIB(readline, readline,
+        [LIBS="$LIBS -lreadline"
+         AC_CHECK_HEADER([readline/readline.h], [],
+             [AC_MSG_ERROR([readline/readline.h not found.])])
+         AC_CHECK_HEADER([readline/history.h], [],
+             [AC_MSG_ERROR([readline/history.h not found.])])
+         AC_DEFINE([HAVE_READLINE], [1],
+             [Define to 1 if you have libreadline.])],
+        [AC_MSG_WARN([libreadline not found, building without readline support.])
+         use_readline=no])
+fi
+
 dnl ----------------------------------------------------------------------------
 dnl handle options
 dnl ----------------------------------------------------------------------------

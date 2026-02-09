@@ -775,6 +775,7 @@ with_gtk
 with_libmagic
 with_X11
 with_dyn_X11
+with_readline
 enable_extended_keys
 enable_desktop_files
 enable_remote_cmds
@@ -1459,6 +1460,8 @@ Optional Packages:
   --with-X11              use libX11 to determine terminal emulator title
                           [default=yes]
   --with-dyn-X11          load libX11 dynamically [default=yes]
+  --without-readline      disable libreadline for command-line editing
+                          [default=yes]
   --with-sanitize=basic|thread|leak
                           enables sanitizers, "basic" means address and
                           undefined sanitizers [default=]
@@ -11343,6 +11346,94 @@ printf "%s\n" "#define HAVE_DECL_MAGIC_MIME_TYPE $ac_have_decl" >>confdefs.h
 
 printf "%s\n" "#define HAVE_LIBMAGIC 1" >>confdefs.h
 
+fi
+
+fi
+
+
+# Check whether --with-readline was given.
+if test ${with_readline+y}
+then :
+  withval=$with_readline; use_readline=$withval
+else case e in #(
+  e) use_readline=yes ;;
+esac
+fi
+
+
+if test "$use_readline" = "yes"; then
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for readline in -lreadline" >&5
+printf %s "checking for readline in -lreadline... " >&6; }
+if test ${ac_cv_lib_readline_readline+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) ac_check_lib_save_LIBS=$LIBS
+LIBS="-lreadline  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.
+   The 'extern "C"' is for builds by C++ compilers;
+   although this is not generally supported in C code supporting it here
+   has little cost and some practical benefit (sr 110532).  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char readline (void);
+int
+main (void)
+{
+return readline ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_readline_readline=yes
+else case e in #(
+  e) ac_cv_lib_readline_readline=no ;;
+esac
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_readline_readline" >&5
+printf "%s\n" "$ac_cv_lib_readline_readline" >&6; }
+if test "x$ac_cv_lib_readline_readline" = xyes
+then :
+  LIBS="$LIBS -lreadline"
+         ac_fn_c_check_header_compile "$LINENO" "readline/readline.h" "ac_cv_header_readline_readline_h" "$ac_includes_default"
+if test "x$ac_cv_header_readline_readline_h" = xyes
+then :
+
+else case e in #(
+  e) as_fn_error $? "readline/readline.h not found." "$LINENO" 5 ;;
+esac
+fi
+
+         ac_fn_c_check_header_compile "$LINENO" "readline/history.h" "ac_cv_header_readline_history_h" "$ac_includes_default"
+if test "x$ac_cv_header_readline_history_h" = xyes
+then :
+
+else case e in #(
+  e) as_fn_error $? "readline/history.h not found." "$LINENO" 5 ;;
+esac
+fi
+
+
+printf "%s\n" "#define HAVE_READLINE 1" >>confdefs.h
+
+else case e in #(
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libreadline not found, building without readline support." >&5
+printf "%s\n" "$as_me: WARNING: libreadline not found, building without readline support." >&2;}
+         use_readline=no ;;
+esac
 fi
 
 fi

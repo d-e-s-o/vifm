@@ -190,36 +190,36 @@ am_vifm_OBJECTS = cfg/config.$(OBJEXT) cfg/info.$(OBJEXT) \
 	modes/dialogs/change_dialog.$(OBJEXT) \
 	modes/dialogs/msg_dialog.$(OBJEXT) \
 	modes/dialogs/sort_dialog.$(OBJEXT) modes/cmdline.$(OBJEXT) \
-	modes/file_info.$(OBJEXT) modes/menu.$(OBJEXT) \
-	modes/modes.$(OBJEXT) modes/more.$(OBJEXT) \
-	modes/normal.$(OBJEXT) modes/view.$(OBJEXT) \
-	modes/visual.$(OBJEXT) ui/cancellation.$(OBJEXT) \
-	ui/color_manager.$(OBJEXT) ui/color_scheme.$(OBJEXT) \
-	ui/colored_line.$(OBJEXT) ui/column_view.$(OBJEXT) \
-	ui/escape.$(OBJEXT) ui/fileview.$(OBJEXT) \
-	ui/quickview.$(OBJEXT) ui/statusbar.$(OBJEXT) \
-	ui/statusline.$(OBJEXT) ui/tabs.$(OBJEXT) ui/ui.$(OBJEXT) \
-	utils/cancellation.$(OBJEXT) utils/dynarray.$(OBJEXT) \
-	utils/env.$(OBJEXT) utils/event_nix.$(OBJEXT) \
-	utils/file_streams.$(OBJEXT) utils/filemon.$(OBJEXT) \
-	utils/filter.$(OBJEXT) utils/fs.$(OBJEXT) \
-	utils/fsdata.$(OBJEXT) utils/fsddata.$(OBJEXT) \
-	utils/fswatch_nix.$(OBJEXT) utils/globs.$(OBJEXT) \
-	utils/gmux_nix.$(OBJEXT) utils/hist.$(OBJEXT) \
-	utils/int_stack.$(OBJEXT) utils/log.$(OBJEXT) \
-	utils/matcher.$(OBJEXT) utils/matchers.$(OBJEXT) \
-	utils/mem.$(OBJEXT) utils/parson.$(OBJEXT) \
-	utils/path.$(OBJEXT) utils/regexp.$(OBJEXT) \
-	utils/selector_nix.$(OBJEXT) utils/shmem_nix.$(OBJEXT) \
-	utils/str.$(OBJEXT) utils/string_array.$(OBJEXT) \
-	utils/trie.$(OBJEXT) utils/utf8.$(OBJEXT) \
-	utils/utf8proc.$(OBJEXT) utils/utils.$(OBJEXT) \
-	utils/utils_nix.$(OBJEXT) args.$(OBJEXT) background.$(OBJEXT) \
-	bmarks.$(OBJEXT) bracket_notation.$(OBJEXT) \
-	builtin_functions.$(OBJEXT) cmd_actions.$(OBJEXT) \
-	cmd_completion.$(OBJEXT) cmd_core.$(OBJEXT) \
-	cmd_handlers.$(OBJEXT) compare.$(OBJEXT) dir_stack.$(OBJEXT) \
-	event_loop.$(OBJEXT) filelist.$(OBJEXT) \
+	modes/cmdline_rl.$(OBJEXT) modes/file_info.$(OBJEXT) \
+	modes/menu.$(OBJEXT) modes/modes.$(OBJEXT) \
+	modes/more.$(OBJEXT) modes/normal.$(OBJEXT) \
+	modes/view.$(OBJEXT) modes/visual.$(OBJEXT) \
+	ui/cancellation.$(OBJEXT) ui/color_manager.$(OBJEXT) \
+	ui/color_scheme.$(OBJEXT) ui/colored_line.$(OBJEXT) \
+	ui/column_view.$(OBJEXT) ui/escape.$(OBJEXT) \
+	ui/fileview.$(OBJEXT) ui/quickview.$(OBJEXT) \
+	ui/statusbar.$(OBJEXT) ui/statusline.$(OBJEXT) \
+	ui/tabs.$(OBJEXT) ui/ui.$(OBJEXT) utils/cancellation.$(OBJEXT) \
+	utils/dynarray.$(OBJEXT) utils/env.$(OBJEXT) \
+	utils/event_nix.$(OBJEXT) utils/file_streams.$(OBJEXT) \
+	utils/filemon.$(OBJEXT) utils/filter.$(OBJEXT) \
+	utils/fs.$(OBJEXT) utils/fsdata.$(OBJEXT) \
+	utils/fsddata.$(OBJEXT) utils/fswatch_nix.$(OBJEXT) \
+	utils/globs.$(OBJEXT) utils/gmux_nix.$(OBJEXT) \
+	utils/hist.$(OBJEXT) utils/int_stack.$(OBJEXT) \
+	utils/log.$(OBJEXT) utils/matcher.$(OBJEXT) \
+	utils/matchers.$(OBJEXT) utils/mem.$(OBJEXT) \
+	utils/parson.$(OBJEXT) utils/path.$(OBJEXT) \
+	utils/regexp.$(OBJEXT) utils/selector_nix.$(OBJEXT) \
+	utils/shmem_nix.$(OBJEXT) utils/str.$(OBJEXT) \
+	utils/string_array.$(OBJEXT) utils/trie.$(OBJEXT) \
+	utils/utf8.$(OBJEXT) utils/utf8proc.$(OBJEXT) \
+	utils/utils.$(OBJEXT) utils/utils_nix.$(OBJEXT) args.$(OBJEXT) \
+	background.$(OBJEXT) bmarks.$(OBJEXT) \
+	bracket_notation.$(OBJEXT) builtin_functions.$(OBJEXT) \
+	cmd_actions.$(OBJEXT) cmd_completion.$(OBJEXT) \
+	cmd_core.$(OBJEXT) cmd_handlers.$(OBJEXT) compare.$(OBJEXT) \
+	dir_stack.$(OBJEXT) event_loop.$(OBJEXT) filelist.$(OBJEXT) \
 	filename_modifiers.$(OBJEXT) fops_common.$(OBJEXT) \
 	fops_cpmv.$(OBJEXT) fops_misc.$(OBJEXT) fops_put.$(OBJEXT) \
 	fops_rename.$(OBJEXT) filetype.$(OBJEXT) filtering.$(OBJEXT) \
@@ -358,10 +358,10 @@ am__depfiles_remade = ./$(DEPDIR)/args.Po ./$(DEPDIR)/background.Po \
 	menus/$(DEPDIR)/trash_menu.Po menus/$(DEPDIR)/trashes_menu.Po \
 	menus/$(DEPDIR)/undolist_menu.Po menus/$(DEPDIR)/users_menu.Po \
 	menus/$(DEPDIR)/vifm_menu.Po modes/$(DEPDIR)/cmdline.Po \
-	modes/$(DEPDIR)/file_info.Po modes/$(DEPDIR)/menu.Po \
-	modes/$(DEPDIR)/modes.Po modes/$(DEPDIR)/more.Po \
-	modes/$(DEPDIR)/normal.Po modes/$(DEPDIR)/view.Po \
-	modes/$(DEPDIR)/visual.Po \
+	modes/$(DEPDIR)/cmdline_rl.Po modes/$(DEPDIR)/file_info.Po \
+	modes/$(DEPDIR)/menu.Po modes/$(DEPDIR)/modes.Po \
+	modes/$(DEPDIR)/more.Po modes/$(DEPDIR)/normal.Po \
+	modes/$(DEPDIR)/view.Po modes/$(DEPDIR)/visual.Po \
 	modes/dialogs/$(DEPDIR)/attr_dialog_nix.Po \
 	modes/dialogs/$(DEPDIR)/change_dialog.Po \
 	modes/dialogs/$(DEPDIR)/msg_dialog.Po \
@@ -969,6 +969,7 @@ vifm_SOURCES = \
 	modes/dialogs/sort_dialog.c modes/dialogs/sort_dialog.h \
 	\
 	modes/cmdline.c modes/cmdline.h \
+	modes/cmdline_rl.c modes/cmdline_rl.h \
 	modes/file_info.c modes/file_info.h \
 	modes/menu.c modes/menu.h \
 	modes/modes.c modes/modes.h \
@@ -1478,6 +1479,8 @@ modes/$(DEPDIR)/$(am__dirstamp):
 	@: >>modes/$(DEPDIR)/$(am__dirstamp)
 modes/cmdline.$(OBJEXT): modes/$(am__dirstamp) \
 	modes/$(DEPDIR)/$(am__dirstamp)
+modes/cmdline_rl.$(OBJEXT): modes/$(am__dirstamp) \
+	modes/$(DEPDIR)/$(am__dirstamp)
 modes/file_info.$(OBJEXT): modes/$(am__dirstamp) \
 	modes/$(DEPDIR)/$(am__dirstamp)
 modes/menu.$(OBJEXT): modes/$(am__dirstamp) \
@@ -1839,6 +1842,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@menus/$(DEPDIR)/users_menu.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@menus/$(DEPDIR)/vifm_menu.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@modes/$(DEPDIR)/cmdline.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@modes/$(DEPDIR)/cmdline_rl.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@modes/$(DEPDIR)/file_info.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@modes/$(DEPDIR)/menu.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@modes/$(DEPDIR)/modes.Po@am__quote@ # am--include-marker
@@ -2907,6 +2911,7 @@ distclean: distclean-am
 	-rm -f menus/$(DEPDIR)/users_menu.Po
 	-rm -f menus/$(DEPDIR)/vifm_menu.Po
 	-rm -f modes/$(DEPDIR)/cmdline.Po
+	-rm -f modes/$(DEPDIR)/cmdline_rl.Po
 	-rm -f modes/$(DEPDIR)/file_info.Po
 	-rm -f modes/$(DEPDIR)/menu.Po
 	-rm -f modes/$(DEPDIR)/modes.Po
@@ -3176,6 +3181,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f menus/$(DEPDIR)/users_menu.Po
 	-rm -f menus/$(DEPDIR)/vifm_menu.Po
 	-rm -f modes/$(DEPDIR)/cmdline.Po
+	-rm -f modes/$(DEPDIR)/cmdline_rl.Po
 	-rm -f modes/$(DEPDIR)/file_info.Po
 	-rm -f modes/$(DEPDIR)/menu.Po
 	-rm -f modes/$(DEPDIR)/modes.Po

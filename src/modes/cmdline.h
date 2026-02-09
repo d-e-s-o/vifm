@@ -85,6 +85,41 @@ int modcline_complete_dirs(const char str[], void *arg);
 /* Completes paths to both files and directories.  Returns completion offset. */
 int modcline_complete_files(const char str[], void *arg);
 
+#ifdef HAVE_READLINE
+
+#include <stddef.h> /* size_t */
+
+#include "../utils/hist.h"
+
+/* Syncs Vifm's input state from readline's line buffer and cursor index. */
+void modcline_sync_from_readline(const char mb_line[], int char_index);
+
+/* Performs accept-input (Enter) logic. */
+void modcline_accept_input(void);
+
+/* Performs cancel-input (Ctrl+C) logic. */
+void modcline_cancel_input(void);
+
+/* Invokes Vifm's tab completion. */
+void modcline_do_completion(void);
+
+/* Returns non-zero if navigation mode is active. */
+int modcline_is_navigating(void);
+
+/* Retrieves the prompt as a multibyte string into buf. */
+void modcline_get_prompt(char buf[], size_t buf_size);
+
+/* Retrieves the initial line as a multibyte string into buf. */
+void modcline_get_initial(char buf[], size_t buf_size);
+
+/* Returns current history for the active submode, or NULL. */
+const hist_t *modcline_get_hist(void);
+
+/* Returns the current line as a newly allocated multibyte string, or NULL. */
+char *modcline_get_line_mb(void);
+
+#endif /* HAVE_READLINE */
+
 #if defined(TEST) || defined(CMDLINE_IMPL)
 
 #include <stddef.h> /* size_t wchar_t */

@@ -39,6 +39,10 @@
 #include "modes/dialogs/msg_dialog.h"
 #include "modes/modes.h"
 #include "modes/wk.h"
+#ifdef HAVE_READLINE
+#include "modes/cmdline.h"
+#include "modes/cmdline_rl.h"
+#endif
 #include "ui/fileview.h"
 #include "ui/quickview.h"
 #include "ui/statusbar.h"
@@ -217,6 +221,48 @@ event_loop(const int *quit, int manage_marking)
 				instance_stop();
 				continue;
 			}
+
+#ifdef HAVE_READLINE
+			if(modes_is_cmdline_like() && cmdline_rl_active()
+					&& !modcline_is_navigating())
+			{
+				cmdline_rl_feed(c);
+
+				if(cmdline_rl_accepted())
+				{
+					modcline_accept_input();
+				}
+				else if(cmdline_rl_cancelled())
+				{
+					modcline_cancel_input();
+				}
+
+				if(cmdline_rl_accepted() || cmdline_rl_cancelled())
+				{
+					/* Match the normal post-command processing flow. */
+					process_scheduled_updates();
+					reset_input_buf(input_buf, &input_buf_pos);
+					modes_input_bar_clear();
+
+					if(ui_sb_multiline())
+					{
+						wait_for_enter = 1;
+						update_all_windows();
+						continue;
+					}
+
+					(void)vifm_chdir(flist_get_dir(curr_view));
+					modes_post();
+					continue;
+				}
+
+				/* Normal character — just update and continue. */
+				process_scheduled_updates();
+				reset_input_buf(input_buf, &input_buf_pos);
+				modes_input_bar_clear();
+				continue;
+			}
+#endif
 
 			int drop_all_input = 0;
 

@@ -76,6 +76,10 @@
 #include "visual.h"
 #include "wk.h"
 
+#ifdef HAVE_READLINE
+#include "cmdline_rl.h"
+#endif
+
 /* Prompt prefix when navigation is enabled. */
 #define NAV_PREFIX L"(nav)"
 
@@ -322,6 +326,10 @@ modcline_init(void)
 	assert(ret_code == 0);
 
 	(void)ret_code;
+
+#ifdef HAVE_READLINE
+	cmdline_rl_init();
+#endif
 }
 
 void
@@ -341,6 +349,20 @@ def_handler(wchar_t key)
 {
 	void *p;
 	wchar_t buf[2] = {key, L'\0'};
+
+#ifdef HAVE_READLINE
+	/* When readline is active, characters that arrive through the key engine
+	 * (e.g. from mapping expansion like nnoremap <f7> :mkdir<space>) must be
+	 * fed to readline so its buffer stays in sync with input_stat.  Without
+	 * this, readline's buffer would remain empty while input_stat.line is
+	 * modified directly, causing the next character from the event loop to
+	 * wipe the text when readline syncs its state back. */
+	if(cmdline_rl_active() && !input_stat.navigating)
+	{
+		cmdline_rl_feed((wint_t)key);
+		return 0;
+	}
+#endif
 
 	input_stat.hist_search = HIST_NONE;
 
@@ -914,6 +936,10 @@ prepare_cmdline_mode(const wchar_t prompt[], const wchar_t initial[],
 
 	/* Make cursor visible only after all initial draws. */
 	ui_set_cursor(/*visibility=*/1);
+
+#ifdef HAVE_READLINE
+	cmdline_rl_start();
+#endif
 }
 
 /* Initializes command-line status. */
@@ -1023,6 +1049,10 @@ is_line_edited(void)
 static void
 leave_cmdline_mode(int cancelled)
 {
+#ifdef HAVE_READLINE
+	cmdline_rl_stop();
+#endif
+
 	free_line_stats(&input_stat);
 
 	if(is_cmdmode(vle_mode_get()))
@@ -3547,6 +3577,96 @@ handle_mouse_event(key_info_t key_info, keys_info_t *keys_info)
 		cmd_ctrl_n(key_info, keys_info);
 	}
 }
+
+#ifdef HAVE_READLINE
+
+void
+modcline_sync_from_readline(const char mb_line[], int char_index)
+{
+	wchar_t *wide_line = to_wide(mb_line);
+	if(wide_line == NULL)
+	{
+		return;
+	}
+
+	free(input_stat.line);
+	input_stat.line = wide_line;
+	input_stat.len = (int)wcslen(wide_line);
+	input_stat.index = (char_index <= input_stat.len) ? char_index
+	                                                  : input_stat.len;
+	input_stat.curs_pos = input_stat.prompt_wid
+	                    + esc_wcswidth(input_stat.line, input_stat.index);
+
+	update_cmdline_size();
+	update_cmdline_text(&input_stat);
+}
+
+void
+modcline_accept_input(void)
+{
+	key_info_t key_info = {};
+	keys_info_t keys_info = {};
+	cmd_return(key_info, &keys_info);
+}
+
+void
+modcline_cancel_input(void)
+{
+	key_info_t key_info = {};
+	keys_info_t keys_info = {};
+	cmd_ctrl_c(key_info, &keys_info);
+}
+
+void
+modcline_do_completion(void)
+{
+	do_completion();
+}
+
+int
+modcline_is_navigating(void)
+{
+	return input_stat.navigating;
+}
+
+void
+modcline_get_prompt(char buf[], size_t buf_size)
+{
+	wcstombs(buf, input_stat.prompt, buf_size);
+	buf[buf_size - 1] = '\0';
+}
+
+void
+modcline_get_initial(char buf[], size_t buf_size)
+{
+	if(input_stat.line != NULL)
+	{
+		wcstombs(buf, input_stat.line, buf_size);
+		buf[buf_size - 1] = '\0';
+	}
+	else
+	{
+		buf[0] = '\0';
+	}
+}
+
+const hist_t *
+modcline_get_hist(void)
+{
+	return pick_hist();
+}
+
+char *
+modcline_get_line_mb(void)
+{
+	if(input_stat.line == NULL)
+	{
+		return NULL;
+	}
+	return to_multibyte(input_stat.line);
+}
+
+#endif /* HAVE_READLINE */
 
 /* vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab cinoptions-=(0 : */
 /* vim: set cinoptions+=t0 filetype=c : */

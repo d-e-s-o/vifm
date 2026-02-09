@@ -80,6 +80,9 @@
 /* Define to 1 if you have the 'random' function. */
 #undef HAVE_RANDOM
 
+/* Define to 1 if you have libreadline. */
+#undef HAVE_READLINE
+
 /* Define to 1 if you have the 'reallocarray' function. */
 #undef HAVE_REALLOCARRAY
 
